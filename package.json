@@ -1,0 +1,14 @@
+{
+  "name": "Team Pika",
+  "version": "1.0.0",
+  "description": "An energy data visualization and analytics tool.",
+  "author": "Team Pika",
+  "license": "MIT License",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HACC2018/Team-Pika"
+
+  },
+  "dependencies": {
+  }
+}
