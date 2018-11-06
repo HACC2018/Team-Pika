@@ -1,6 +1,7 @@
 $(function() {
   $('input[name="daterange"]').daterangepicker({
-    opens: 'left'
+    opens: 'left',
+    xhrFields: { withCredentials: true }
   }, function(start, end, label) {
     console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
     var url = start.format('YYYY-MM-DDThh:mm:ss') + '/' + end.format('YYYY-MM-DDThh:mm:ss');
@@ -24,13 +25,12 @@ $(function() {
         var week_labels = [];
         var week_data = [];
         var sum = 0;
-        for (var i = 1; i < result.length ; i++){
+        for (var i = 0; i < result.length ; i++){
               //sum += Math.round(result[i][column_name]);
               // From hours -> weekly data points
-              if (i % 168 == 0) {
                 data.push(Math.round(result[i].kW_AG_ENGINEERING_MAIN_MTR));
                 labels.push(result[i].Timestamp);
-            }
+
 
         }
 
