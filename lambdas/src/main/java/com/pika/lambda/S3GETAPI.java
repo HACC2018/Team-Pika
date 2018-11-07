@@ -8,7 +8,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class DatabaseToS3 {
+public class S3GETAPI {
 
     public static class RequestClass {
         public RequestClass(String starttime, String endtime) {
