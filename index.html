@@ -28,6 +28,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
   <!--  Notifications Plugin    -->
   <script src="js/plugins/bootstrap-notify.js"></script>
+
   <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="js/now-ui-dashboard.min.js?v=1.2.0" type="text/javascript"></script>
   <!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
@@ -38,6 +39,7 @@
   <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
   <script>
     $(document).ready(function() {
       // Javascript method's body can be found in assets/js/demos.js
@@ -97,6 +99,7 @@
           </div>
         </div>
       </nav>
+
       <!-- End Navbar -->
       <div class="panel-header panel-header-lg">
         <canvas id="bigDashboardChart"></canvas>
@@ -110,6 +113,9 @@
                 <h4 class="card-title">Average Power Consumption</h4>
 
                 <div class="chart-area">
+                  <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-6">
                   <canvas id="canvas" style="z-index: 2"></canvas>
                   <script>
                   var ctx = document.getElementById("canvas").getContext("2d");
@@ -131,22 +137,241 @@
                   	}
                   });
                   </script>
+                    </div>
+                    <div class="col-2"></div>
+            </div>
+
                   <a target="_blank" href="" class="btn btn-round btn-primary">Year</a>
                   <a target="_blank" href="" class="btn btn-round btn-primary">Month</a>
                   <a target="_blank" href="" class="btn btn-round btn-primary">Building</a>
-            </div>
+
+                </div>
 
         </div>
       </div>
     </div>
   </div>
+      </div>
+
+  <div class="chart-area">
+    <!-- Test -->
+
+    <div class="content">
+      <div class="container">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="card-category">Power</h5>
+              <h4 class="card-title">Average Power Consumption</h4>
+              <div class="chart-area">
+                <div class="container">
+                  <div class="row">
+                    <div class="col"></div>
+                    <div class="col-4">
+                      <canvas id="canvas2" style="z-index: 2"></canvas>
+                      <script>
+                          var ctx = document.getElementById("canvas2").getContext("2d");
+                          new Chart(ctx, {
+                              type: "tsgauge",
+                              data: {
+                                  datasets: [{
+                                      backgroundColor: ["#0fdc63", "#fd9704", "#ff7143"],
+                                      borderWidth: 0,
+                                      gaugeData: {
+                                          value: 7777,
+                                          valueColor: "#ff7143"
+                                      },
+                                      gaugeLimits: [0, 3000, 7000, 10000]
+                                  }]
+                              },
+                              options: {
+                                  events: []
+                              }
+                          });
+                      </script></div>
+                    <div class="col-4">
+                      <canvas id="canvas1" style="z-index: 2"></canvas>
+                      <script>
+                          var ctx = document.getElementById("canvas1").getContext("2d");
+                          new Chart(ctx, {
+                              type: "tsgauge",
+                              data: {
+                                  datasets: [{
+                                      backgroundColor: ["#0fdc63", "#fd9704", "#ff7143"],
+                                      borderWidth: 0,
+                                      gaugeData: {
+                                          value: 7777,
+                                          valueColor: "#ff7143"
+                                      },
+                                      gaugeLimits: [0, 3000, 7000, 10000]
+                                  }]
+                              },
+                              options: {
+                                  events: []
+                              }
+                          });
+                      </script>
+                    </div>
+                    <div class="col"></div>
+                  </div>
+                  <div class="row">
+                    <div class="container">
+                      <div class="col-2"></div>
+                      <div class="col-6">
+                        <a target="_blank" href="" class="btn btn-round btn-primary">Year</a>
+                        <a target="_blank" href="" class="btn btn-round btn-primary">Month</a>
+                        <a target="_blank" href="" class="btn btn-round btn-primary">Building</a>
+                      </div>
+                      <div class="col-2"></div>
+                    </div>
+                    </div>
+
+                  <div class="row">
+
+                  </div>
+
+
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+      <div class="chart-area">
+        <!-- Test -->
+
+        <div class="content">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-category">Power</h5>
+                  <h4 class="card-title">Average Power Consumption</h4>
+                  <!--<div class="chart-area">-->
+                    <div class="container">
+                      <div class="row">
+                        <div class="col"></div>
+                        <div class="col">
+                          <canvas id="canvas100" style="z-index: 2; height: 400px; width:1000px"></canvas>
+
+                          <script>
+                              var color = Chart.helpers.color;
+                              var scatterChartData = {
+                                  datasets: [{
+                                      label: 'My First dataset',
+                                      borderColor: window.chartColors.red,
+                                      backgroundColor: color(window.chartColors.red).alpha(0.2).rgbString(),
+                                      data: [{
+                                          x: randomScalingFactor(),
+                                          y: randomScalingFactor(),
+                                      }, {
+                                          x: randomScalingFactor(),
+                                          y: randomScalingFactor(),
+                                      }, {
+                                          x: randomScalingFactor(),
+                                          y: randomScalingFactor(),
+                                      }, {
+                                          x: randomScalingFactor(),
+                                          y: randomScalingFactor(),
+                                      }, {
+                                          x: randomScalingFactor(),
+                                          y: randomScalingFactor(),
+                                      }, {
+                                          x: randomScalingFactor(),
+                                          y: randomScalingFactor(),
+                                      }, {
+                                          x: randomScalingFactor(),
+                                          y: randomScalingFactor(),
+                                      }]
+                                  }, {
+                                      label: 'My Second dataset',
+                                      borderColor: window.chartColors.blue,
+                                      backgroundColor: color(window.chartColors.blue).alpha(0.2).rgbString(),
+                                      data: [{
+                                          x: randomScalingFactor(),
+                                          y: randomScalingFactor(),
+                                      }, {
+                                          x: randomScalingFactor(),
+                                          y: randomScalingFactor(),
+                                      }, {
+                                          x: randomScalingFactor(),
+                                          y: randomScalingFactor(),
+                                      }, {
+                                          x: randomScalingFactor(),
+                                          y: randomScalingFactor(),
+                                      }, {
+                                          x: randomScalingFactor(),
+                                          y: randomScalingFactor(),
+                                      }, {
+                                          x: randomScalingFactor(),
+                                          y: randomScalingFactor(),
+                                      }, {
+                                          x: randomScalingFactor(),
+                                          y: randomScalingFactor(),
+                                      }]
+                                  }]
+                              };
+
+                              window.onload = function() {
+                                  var ctx = document.getElementById('canvas100').getContext('2d');
+                                  window.myScatter = Chart.Scatter(ctx, {
+                                      data: scatterChartData,
+                                      options: {
+                                          title: {
+                                              display: true,
+                                              text: 'Chart.js Scatter Chart'
+                                          },
+                                      }
+                                  });
+                              };
+
+                          </script>
+
+                        <!--</div>-->
+                        <div class="col"></div>
+                      </div>
+                      <div class="row">
+                        <!--<div class="container">-->
+                          <div class="col-2"></div>
+                          <div class="col-6">
+                            <a target="_blank" href="" class="btn btn-round btn-primary">Year</a>
+                            <a target="_blank" href="" class="btn btn-round btn-primary">Month</a>
+                            <a target="_blank" href="" class="btn btn-round btn-primary">Building</a>
+                          </div>
+                          <div class="col-2"></div>
+                        <!--</div>-->
+                      </div>
+
+                      <div class="row">
+
+                      </div>
+
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+    <!-- Test -->
+  </div>
+
+
+
+
   <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
   <div class="modal-content" style="padding:50px;">
 
-
-
     <form>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">x</button>
+      </div>
       <div class="checkbox">
         <label><input type="checkbox" value="Agriculture Engineering" onchange="addArrayPost(event)">Agriculture Engineering</label>
       </div>
@@ -274,9 +499,13 @@
         <label><input type="checkbox" value="Wist Hall" onchange="addArrayPost(event)">Wist Hall</label>
       </div>
 
-      <script>
-        var building = [];
+      <div class="container">
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+      </div>
 
+      <script>
       function addArrayPost(e) {
           if(e.target.checked) {
               addArr(e.target);
@@ -296,10 +525,9 @@
           }
       }
       </script>
+    </form>
   </div>
   </div>
-  </div>
-
+      </div></div></div>
 </body>
-</form>
 </html>
