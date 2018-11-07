@@ -28,6 +28,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
   <!--  Notifications Plugin    -->
   <script src="js/plugins/bootstrap-notify.js"></script>
+
   <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="js/now-ui-dashboard.min.js?v=1.2.0" type="text/javascript"></script>
   <!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
@@ -38,6 +39,7 @@
   <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
   <script>
     $(document).ready(function() {
       // Javascript method's body can be found in assets/js/demos.js
@@ -60,9 +62,15 @@
       <div class="sidebar-wrapper">
         <ul class="nav">
           <li class="active ">
-            <a href="./dashboard.html">
+            <a href="./index.html">
               <i class="now-ui-icons design_app"></i>
               <p>Dashboard</p>
+            </a>
+          </li>
+          <li class="active ">
+            <a href="./map.html">
+              <i class="now-ui-icons design_app"></i>
+              <p>3D Map</p>
             </a>
           </li>
         </ul>
@@ -82,7 +90,8 @@
             </div>
             <a class="navbar-brand" href="#pablo">Dashboard</a>
           </div>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index"
+            aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
             <span class="navbar-toggler-bar navbar-kebab"></span>
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -90,73 +99,443 @@
           <div class="collapse navbar-collapse justify-content-end" id="navigation">
             <ul class="navbar-nav">
 
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Choose
+                Building(s)</button>
 
-              <input type="text" name="daterange" value="01/01/2017 - 01/15/2017"/>
+              <input type="text" name="daterange" value="01/01/2017 - 01/15/2017" />
             </ul>
           </div>
         </div>
       </nav>
+
       <!-- End Navbar -->
       <div class="panel-header panel-header-lg">
         <canvas id="bigDashboardChart"></canvas>
       </div>
-      <div class="content">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-header">
-                <h5 class="card-category">Power</h5>
-                <h4 class="card-title">Average Power Consumption</h4>
+      <div class="chart-area">
+        <!-- Test -->
 
-                <div class="chart-area">
-                  <canvas id="canvas" style="z-index: 2"></canvas>
-                  <script>
-                  var ctx = document.getElementById("canvas").getContext("2d");
-                  new Chart(ctx, {
-                  	type: "tsgauge",
-                  	data: {
-                  		datasets: [{
-                  			backgroundColor: ["#0fdc63", "#fd9704", "#ff7143"],
-                  			borderWidth: 0,
-                  			gaugeData: {
-                  				value: 7777,
-                  				valueColor: "#ff7143"
-                  			},
-                  			gaugeLimits: [0, 3000, 7000, 10000]
-                  		}]
-                  	},
-                  	options: {
-                  		events: []
-                  	}
-                  });
-                  </script>
-                  <a target="_blank" href="" class="btn btn-round btn-primary">Year</a>
-                  <a target="_blank" href="" class="btn btn-round btn-primary">Month</a>
-                  <a target="_blank" href="" class="btn btn-round btn-primary">Building</a>
+        <div class="content">
+          <div class="row" style="margin:0">
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-category">Power</h5>
+                  <h4 class="card-title">Average Power Consumption</h4>
+                  <div class="chart-area">
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <canvas id="canvas2" style="z-index: 2"></canvas>
+                          <script>
+                            var ctx = document.getElementById("canvas2").getContext("2d");
+                          new Chart(ctx, {
+                              type: "tsgauge",
+                              data: {
+                                  datasets: [{
+                                      backgroundColor: ["#0fdc63", "#fd9704", "#ff7143"],
+                                      borderWidth: 0,
+                                      gaugeData: {
+                                          value: 7777,
+                                          valueColor: "#ff7143"
+                                      },
+                                      gaugeLimits: [0, 3000, 7000, 10000]
+                                  }]
+                              },
+                              options: {
+                                  events: []
+                              }
+                          });
+                      </script>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="container">
+                          <div class="col-md-2"></div>
+                          <div class="col-md-10">
+                            <a target="_blank" href="" class="btn btn-round btn-primary">Year</a>
+                            <a target="_blank" href="" class="btn btn-round btn-primary">Month</a>
+                            <a target="_blank" href="" class="btn btn-round btn-primary">Building</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-category">Power</h5>
+                  <h4 class="card-title">Average CO2 Production</h4>
+                  <div class="chart-area">
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <canvas id="canvas1" style="z-index: 2"></canvas>
+                          <script>
+                            var ctx = document.getElementById("canvas1").getContext("2d");
+                              new Chart(ctx, {
+                                  type: "tsgauge",
+                                  data: {
+                                      datasets: [{
+                                          backgroundColor: ["#0fdc63", "#fd9704", "#ff7143"],
+                                          borderWidth: 0,
+                                          gaugeData: {
+                                              value: 7777,
+                                              valueColor: "#ff7143"
+                                          },
+                                          gaugeLimits: [0, 3000, 7000, 10000]
+                                      }]
+                                  },
+                                  options: {
+                                      events: []
+                                  }
+                              });
+                          </script>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="container">
+                          <div class="col-md-2"></div>
+                          <div class="col-md-10">
+                            <a target="_blank" href="" class="btn btn-round btn-primary">Year</a>
+                            <a target="_blank" href="" class="btn btn-round btn-primary">Month</a>
+                            <a target="_blank" href="" class="btn btn-round btn-primary">Building</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
+      <div class="chart-area">
+        <!-- Test -->
+
+        <div class="content">
+          <div class="row" style="margin: 0">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-category">Power</h5>
+                  <h4 class="card-title">Average Power Consumption</h4>
+                  <!--<div class="chart-area">-->
+                  <div class="container">
+                    <div class="row">
+                      <div class="col"></div>
+                      <div class="col">
+                        <canvas id="canvas100" style="z-index: 2; height: 400px; width:1000px"></canvas>
+
+                        <script>
+                          var color = Chart.helpers.color;
+                              var scatterChartData = {
+                                  datasets: [{
+                                      label: 'My First dataset',
+                                      borderColor: window.chartColors.red,
+                                      backgroundColor: color(window.chartColors.red).alpha(0.2).rgbString(),
+                                      data: [{
+                                          x: randomScalingFactor(),
+                                          y: randomScalingFactor(),
+                                      }, {
+                                          x: randomScalingFactor(),
+                                          y: randomScalingFactor(),
+                                      }, {
+                                          x: randomScalingFactor(),
+                                          y: randomScalingFactor(),
+                                      }, {
+                                          x: randomScalingFactor(),
+                                          y: randomScalingFactor(),
+                                      }, {
+                                          x: randomScalingFactor(),
+                                          y: randomScalingFactor(),
+                                      }, {
+                                          x: randomScalingFactor(),
+                                          y: randomScalingFactor(),
+                                      }, {
+                                          x: randomScalingFactor(),
+                                          y: randomScalingFactor(),
+                                      }]
+                                  }, {
+                                      label: 'My Second dataset',
+                                      borderColor: window.chartColors.blue,
+                                      backgroundColor: color(window.chartColors.blue).alpha(0.2).rgbString(),
+                                      data: [{
+                                          x: randomScalingFactor(),
+                                          y: randomScalingFactor(),
+                                      }, {
+                                          x: randomScalingFactor(),
+                                          y: randomScalingFactor(),
+                                      }, {
+                                          x: randomScalingFactor(),
+                                          y: randomScalingFactor(),
+                                      }, {
+                                          x: randomScalingFactor(),
+                                          y: randomScalingFactor(),
+                                      }, {
+                                          x: randomScalingFactor(),
+                                          y: randomScalingFactor(),
+                                      }, {
+                                          x: randomScalingFactor(),
+                                          y: randomScalingFactor(),
+                                      }, {
+                                          x: randomScalingFactor(),
+                                          y: randomScalingFactor(),
+                                      }]
+                                  }]
+                              };
+
+                              window.onload = function() {
+                                  var ctx = document.getElementById('canvas100').getContext('2d');
+                                  window.myScatter = Chart.Scatter(ctx, {
+                                      data: scatterChartData,
+                                      options: {
+                                          title: {
+                                              display: true,
+                                              text: 'Chart.js Scatter Chart'
+                                          },
+                                      }
+                                  });
+                              };
+
+                          </script>
+
+                        <!--</div>-->
+                        <div class="col"></div>
+                      </div>
+                      <div class="row">
+                        <!--<div class="container">-->
+                        <a target="_blank" href="" class="btn btn-round btn-primary">Year</a>
+                        <a target="_blank" href="" class="btn btn-round btn-primary">Month</a>
+                        <a target="_blank" href="" class="btn btn-round btn-primary">Building</a>
+                        <!--</div>-->
+                      </div>
+
+                      <div class="row">
+
+                      </div>
+
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Test -->
+      </div>
+
+
+
+
+      <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content" style="padding:50px;">
+
+            <form>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">x</button>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Agriculture engineering" onchange="addArrayPost(event)">Agriculture
+                      Engineering</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Architecture" onchange="addArrayPost(event)">Architecture</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Bachman hall" onchange="addArrayPost(event)">Bachman Hall</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Biomedical science" onchange="addArrayPost(event)">Biomedical
+                      Science</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Business administration shidler" onchange="addArrayPost(event)">Business
+                      Administration Shidler</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Crawford hall" onchange="addArrayPost(event)">Crawford Hall</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Dean hall" onchange="addArrayPost(event)">Dean Hall</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Duke kahanamoku pool" onchange="addArrayPost(event)">Duke
+                      Kahanamoku Pool</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Environmental protection" onchange="addArrayPost(event)">Environmental
+                      Protection</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Everly hall" onchange="addArrayPost(event)">Everly Hall</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="George hall" onchange="addArrayPost(event)">George Hall</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Gilmore hall" onchange="addArrayPost(event)">Gilmore Hall</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Hamilton library" onchange="addArrayPost(event)">Hamilton
+                      Library</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Hawaii hall" onchange="addArrayPost(event)">Hawaii Hall</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Korean studies" onchange="addArrayPost(event)">Korean Studies</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Hawaii institute of geophysics noaa" onchange="addArrayPost(event)">Hawaii
+                      Institute of Geophysics NOAA</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Hawaii institute of geophysics substations" onchange="addArrayPost(event)">Hawaii
+                      Institute of Geophysics Substations</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Health physical education klum gym" onchange="addArrayPost(event)">Health
+                      & Physical Education - Klum Gym</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Health physical education" onchange="addArrayPost(event)">Health
+                      & Physical Education</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Keller hall" onchange="addArrayPost(event)">Keller Hall</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Law library" onchange="addArrayPost(event)">Law Library</label>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Law school" onchange="addArrayPost(event)">Law School</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Les murakami stadium" onchange="addArrayPost(event)">Les
+                      Murakami
+                      Stadium</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Marine science" onchange="addArrayPost(event)">Marine Science</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Miller hall" onchange="addArrayPost(event)">Miller Hall</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Moore hall" onchange="addArrayPost(event)">Moore Hall</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Mudis complex" onchange="addArrayPost(event)">Mudis Complex</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Pacific biosciences research center" onchange="addArrayPost(event)">Pacific
+                      Biosciences Research Center</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Physical science" onchange="addArrayPost(event)">Physical
+                      Science</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Pacific ocean science and technology" onchange="addArrayPost(event)">Pacific
+                      Ocean Science and Technology</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Queen liliuokalani center of student services" onchange="addArrayPost(event)">Queen
+                      Liliuokalani Center of Student Services</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Quad chiller plant" onchange="addArrayPost(event)">Quad
+                      Chiller
+                      Plant</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Sakamaki hall ac equipment" onchange="addArrayPost(event)">Sakamaki
+                      Hall AC Equipment</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Sakamaki hall" onchange="addArrayPost(event)">Sakamaki Hall</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Multipurpose building" onchange="addArrayPost(event)">Multipurpose
+                      Building</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Saunders hall" onchange="addArrayPost(event)">Saunders Hall</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Sherman" onchange="addArrayPost(event)">Sherman</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Spalding hall" onchange="addArrayPost(event)">Spalding Hall</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="St john plant science" onchange="addArrayPost(event)">St John
+                      Plant Science</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Stan sheriff center" onchange="addArrayPost(event)">Stan
+                      Sheriff
+                      Center</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Webster hall" onchange="addArrayPost(event)">Webster Hall</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Wist hall" onchange="addArrayPost(event)">Wist Hall</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="container">
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+
+              <!-- <script>
+                var building = [];
+
+                function addArrayPost(e) {
+                  if (e.target.checked) {
+                    addArr(e.target);
+                  } else {
+                    removeArr(e.target);
+                  }
+                }
+                var arr = [];
+
+                function addArr(obj) {
+                  arr.push(obj.value);
+                  console.log(arr);
+                }
+
+                function removeArr(obj) {
+                  var index = arr.indexOf(obj.value);
+                  if (index > -1) {
+                    arr.splice(index, 1);
+                  }
+                }
+              </script> -->
+            </form>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-  <div class="modal-content" style="padding:50px;">
-    <form>
-    <div class="checkbox">
-      <label><input type="checkbox" value="Agriculture Engineering">Agriculture Engineering</label>
-    </div>
-    <div class="checkbox">
-      <label><input type="checkbox" value="">Archtecture</label>
-    </div>
-    <div class="checkbox">
-      <label><input type="checkbox" value="">Bachman Hall</label>
-    </div>
-  </div>
-  </div>
-  </div>
-
 </body>
-</form>
+
 </html>
