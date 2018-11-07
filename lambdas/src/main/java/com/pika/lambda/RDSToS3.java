@@ -1,17 +1,10 @@
 package com.pika.lambda;
 
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.S3Object;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-
 import java.io.IOException;
-
 import java.sql.*;
+
+import com.google.gson.JsonObject;
+import org.apache.commons.lang3.StringUtils;
 
 
 public class RDSToS3 {
@@ -33,21 +26,25 @@ public class RDSToS3 {
 
             ResultSetMetaData rsMetaData = rs.getMetaData();
             int columnCount = rsMetaData.getColumnCount();
-            Gson obj = new Gson();
-            while(rs.next()) {
-                for (int i = 0; i < columnCount; i++) {
-                    String column_name = rsMetaData.getColumnName(i);
-                    obj.put(column_name, rs.getObject(column_name));
+            JsonObject obj = new JsonObject();
 
+            while (rs.next()) {
+                obj.addProperty(rsMetaData.getColumnName(1), rs.getString(1));
+                for (int i = 2; i <= columnCount; i++) {
+                    String columnName = rsMetaData.getColumnName(i);
+                    String prettyColumnName = StringUtils.capitalize(columnName.replace("_", " "));
+                    obj.addProperty(prettyColumnName, rs.getDouble(columnName));
                 }
             }
-            System.out.println(rs);
+
+            System.out.println(obj);
+
             stmt.close();
             conn.close();
+
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName()+": "+ e.getMessage() );
             System.exit(0);
         }
-//        System.out.println("Table created successfully");
     }
 }
