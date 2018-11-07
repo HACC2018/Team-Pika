@@ -3,8 +3,6 @@ package com.pika.lambda;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.S3Object;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -56,10 +54,6 @@ public class DatabaseToS3 {
         while((temp = reader.readLine()) != null) {
             builder.append(temp);
         }
-        ObjectMapper mapper = new ObjectMapper();
-        System.out.println(builder.toString());
-        JsonNode json = mapper.readTree(builder.toString());
-        System.out.println(json.path("kW_AG_ENGINEERING_MAIN_MTR").asDouble());
-        return json.asText();
+        return builder.toString();
     }
 }
