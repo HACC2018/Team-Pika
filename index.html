@@ -62,9 +62,15 @@
       <div class="sidebar-wrapper">
         <ul class="nav">
           <li class="active ">
-            <a href="./dashboard.html">
+            <a href="./index.html">
               <i class="now-ui-icons design_app"></i>
               <p>Dashboard</p>
+            </a>
+          </li>
+          <li class="active ">
+            <a href="./map.html">
+              <i class="now-ui-icons design_app"></i>
+              <p>3D Map</p>
             </a>
           </li>
         </ul>
@@ -84,7 +90,8 @@
             </div>
             <a class="navbar-brand" href="#pablo">Dashboard</a>
           </div>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index"
+            aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
             <span class="navbar-toggler-bar navbar-kebab"></span>
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -92,9 +99,10 @@
           <div class="collapse navbar-collapse justify-content-end" id="navigation">
             <ul class="navbar-nav">
 
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Choose
+                Building(s)</button>
 
-              <input type="text" name="daterange" value="01/01/2017 - 01/15/2017"/>
+              <input type="text" name="daterange" value="01/01/2017 - 01/15/2017" />
             </ul>
           </div>
         </div>
@@ -104,95 +112,23 @@
       <div class="panel-header panel-header-lg">
         <canvas id="bigDashboardChart"></canvas>
       </div>
-      <div class="content">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-header">
-                <h5 class="card-category">Power</h5>
-                <h4 class="card-title">Average Power Consumption</h4>
+      <div class="chart-area">
+        <!-- Test -->
 
-                <div class="chart-area">
-                  <div class="row">
-                    <div class="col-2"></div>
-                    <div class="col-6">
-                  <canvas id="canvas" style="z-index: 2"></canvas>
-                  <script>
-                  var ctx = document.getElementById("canvas").getContext("2d");
-                  new Chart(ctx, {
-                  	type: "tsgauge",
-                  	data: {
-                  		datasets: [{
-                  			backgroundColor: ["#0fdc63", "#fd9704", "#ff7143"],
-                  			borderWidth: 0,
-                  			gaugeData: {
-                  				value: 7777,
-                  				valueColor: "#ff7143"
-                  			},
-                  			gaugeLimits: [0, 3000, 7000, 10000]
-                  		}]
-                  	},
-                  	options: {
-                  		events: []
-                  	}
-                  });
-                  </script>
-                    </div>
-                    <div class="col-2"></div>
-            </div>
-
-                  <a target="_blank" href="" class="btn btn-round btn-primary">Year</a>
-                  <a target="_blank" href="" class="btn btn-round btn-primary">Month</a>
-                  <a target="_blank" href="" class="btn btn-round btn-primary">Building</a>
-
-                </div>
-
-        </div>
-      </div>
-    </div>
-  </div>
-      </div>
-
-  <div class="chart-area">
-    <!-- Test -->
-
-    <div class="content">
-      <div class="container">
-        <div class="col-md-12">
-          <div class="card">
-            <div class="card-header">
-              <h5 class="card-category">Power</h5>
-              <h4 class="card-title">Average Power Consumption</h4>
-              <div class="chart-area">
-                <div class="container">
-                  <div class="row">
-                    <div class="col"></div>
-                    <div class="col-4">
-                      <canvas id="canvas2" style="z-index: 2"></canvas>
-                      <script>
-                          var ctx = document.getElementById("canvas2").getContext("2d");
-                          new Chart(ctx, {
-                              type: "tsgauge",
-                              data: {
-                                  datasets: [{
-                                      backgroundColor: ["#0fdc63", "#fd9704", "#ff7143"],
-                                      borderWidth: 0,
-                                      gaugeData: {
-                                          value: 7777,
-                                          valueColor: "#ff7143"
-                                      },
-                                      gaugeLimits: [0, 3000, 7000, 10000]
-                                  }]
-                              },
-                              options: {
-                                  events: []
-                              }
-                          });
-                      </script></div>
-                    <div class="col-4">
-                      <canvas id="canvas1" style="z-index: 2"></canvas>
-                      <script>
-                          var ctx = document.getElementById("canvas1").getContext("2d");
+        <div class="content">
+          <div class="row" style="margin:0">
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-category">Power</h5>
+                  <h4 class="card-title">Average Power Consumption</h4>
+                  <div class="chart-area">
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <canvas id="canvas2" style="z-index: 2"></canvas>
+                          <script>
+                            var ctx = document.getElementById("canvas2").getContext("2d");
                           new Chart(ctx, {
                               type: "tsgauge",
                               data: {
@@ -211,54 +147,93 @@
                               }
                           });
                       </script>
-                    </div>
-                    <div class="col"></div>
-                  </div>
-                  <div class="row">
-                    <div class="container">
-                      <div class="col-2"></div>
-                      <div class="col-6">
-                        <a target="_blank" href="" class="btn btn-round btn-primary">Year</a>
-                        <a target="_blank" href="" class="btn btn-round btn-primary">Month</a>
-                        <a target="_blank" href="" class="btn btn-round btn-primary">Building</a>
+                        </div>
                       </div>
-                      <div class="col-2"></div>
+                      <div class="row">
+                        <div class="container">
+                          <div class="col-md-2"></div>
+                          <div class="col-md-10">
+                            <a target="_blank" href="" class="btn btn-round btn-primary">Year</a>
+                            <a target="_blank" href="" class="btn btn-round btn-primary">Month</a>
+                            <a target="_blank" href="" class="btn btn-round btn-primary">Building</a>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    </div>
-
-                  <div class="row">
-
-                  </div>
-
-
                   </div>
                 </div>
               </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-category">Power</h5>
+                  <h4 class="card-title">Average CO2 Production</h4>
+                  <div class="chart-area">
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <canvas id="canvas1" style="z-index: 2"></canvas>
+                          <script>
+                            var ctx = document.getElementById("canvas1").getContext("2d");
+                              new Chart(ctx, {
+                                  type: "tsgauge",
+                                  data: {
+                                      datasets: [{
+                                          backgroundColor: ["#0fdc63", "#fd9704", "#ff7143"],
+                                          borderWidth: 0,
+                                          gaugeData: {
+                                              value: 7777,
+                                              valueColor: "#ff7143"
+                                          },
+                                          gaugeLimits: [0, 3000, 7000, 10000]
+                                      }]
+                                  },
+                                  options: {
+                                      events: []
+                                  }
+                              });
+                          </script>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="container">
+                          <div class="col-md-2"></div>
+                          <div class="col-md-10">
+                            <a target="_blank" href="" class="btn btn-round btn-primary">Year</a>
+                            <a target="_blank" href="" class="btn btn-round btn-primary">Month</a>
+                            <a target="_blank" href="" class="btn btn-round btn-primary">Building</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    </div>
 
       <div class="chart-area">
         <!-- Test -->
 
         <div class="content">
-          <div class="row">
+          <div class="row" style="margin: 0">
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header">
                   <h5 class="card-category">Power</h5>
                   <h4 class="card-title">Average Power Consumption</h4>
                   <!--<div class="chart-area">-->
-                    <div class="container">
-                      <div class="row">
-                        <div class="col"></div>
-                        <div class="col">
-                          <canvas id="canvas100" style="z-index: 2; height: 400px; width:1000px"></canvas>
+                  <div class="container">
+                    <div class="row">
+                      <div class="col"></div>
+                      <div class="col">
+                        <canvas id="canvas100" style="z-index: 2; height: 400px; width:1000px"></canvas>
 
-                          <script>
-                              var color = Chart.helpers.color;
+                        <script>
+                          var color = Chart.helpers.color;
                               var scatterChartData = {
                                   datasets: [{
                                       label: 'My First dataset',
@@ -335,9 +310,9 @@
                       </div>
                       <div class="row">
                         <!--<div class="container">-->
-                            <a target="_blank" href="" class="btn btn-round btn-primary">Year</a>
-                            <a target="_blank" href="" class="btn btn-round btn-primary">Month</a>
-                            <a target="_blank" href="" class="btn btn-round btn-primary">Building</a>
+                        <a target="_blank" href="" class="btn btn-round btn-primary">Year</a>
+                        <a target="_blank" href="" class="btn btn-round btn-primary">Month</a>
+                        <a target="_blank" href="" class="btn btn-round btn-primary">Building</a>
                         <!--</div>-->
                       </div>
 
@@ -354,176 +329,213 @@
           </div>
         </div>
 
-    <!-- Test -->
+        <!-- Test -->
+      </div>
+
+
+
+
+      <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content" style="padding:50px;">
+
+            <form>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">x</button>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Agriculture Engineering" onchange="addArrayPost(event)">Agriculture
+                      Engineering</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Architecture" onchange="addArrayPost(event)">Architecture</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Bachman Hall" onchange="addArrayPost(event)">Bachman Hall</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Biomedical Science" onchange="addArrayPost(event)">Biomedical
+                      Science</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Business Administration Shidler" onchange="addArrayPost(event)">Business
+                      Administration Shidler</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Crawford Hall" onchange="addArrayPost(event)">Crawford Hall</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Dean Hall" onchange="addArrayPost(event)">Dean Hall</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Duke Kahanamoku Pool" onchange="addArrayPost(event)">Duke
+                      Kahanamoku Pool</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Environmental Protection" onchange="addArrayPost(event)">Environmental
+                      Protection</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Everly Hall" onchange="addArrayPost(event)">Everly Hall</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="George Hall" onchange="addArrayPost(event)">George Hall</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Gilmore Hall" onchange="addArrayPost(event)">Gilmore Hall</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Hamilton Library" onchange="addArrayPost(event)">Hamilton
+                      Library</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Hawaii Hall" onchange="addArrayPost(event)">Hawaii Hall</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Korean Studies" onchange="addArrayPost(event)">Korean Studies</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Hawaii Institute of Geophysics NOAA" onchange="addArrayPost(event)">Hawaii
+                      Institute of Geophysics NOAA</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Hawaii Institute of Geophysics Substations" onchange="addArrayPost(event)">Hawaii
+                      Institute of Geophysics Substations</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Health & Physical Education - Klum Gym" onchange="addArrayPost(event)">Health
+                      & Physical Education - Klum Gym</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Health & Physical Education" onchange="addArrayPost(event)">Health
+                      & Physical Education</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Keller Hall" onchange="addArrayPost(event)">Keller Hall</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Law Library" onchange="addArrayPost(event)">Law Library</label>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Law School" onchange="addArrayPost(event)">Law School</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Les Murakami Stadium" onchange="addArrayPost(event)">Les
+                      Murakami
+                      Stadium</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Marine Science" onchange="addArrayPost(event)">Marine Science</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Miller Hall" onchange="addArrayPost(event)">Miller Hall</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Moore Hall" onchange="addArrayPost(event)">Moore Hall</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Mudis Complex" onchange="addArrayPost(event)">Mudis Complex</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Pacific Biosciences Research Center" onchange="addArrayPost(event)">Pacific
+                      Biosciences Research Center</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Physical Science" onchange="addArrayPost(event)">Physical
+                      Science</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Pacific Ocean Science and Technology" onchange="addArrayPost(event)">Pacific
+                      Ocean Science and Technology</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Queen Liliuokalani Center of Student Services" onchange="addArrayPost(event)">Queen
+                      Liliuokalani Center of Student Services</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Quad Chiller Plant" onchange="addArrayPost(event)">Quad
+                      Chiller
+                      Plant</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Sakamaki Hall AC Equipment" onchange="addArrayPost(event)">Sakamaki
+                      Hall AC Equipment</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Sakamaki Hall" onchange="addArrayPost(event)">Sakamaki Hall</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Multipurpose Building" onchange="addArrayPost(event)">Multipurpose
+                      Building</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Saunders Hall" onchange="addArrayPost(event)">Saunders Hall</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Sherman" onchange="addArrayPost(event)">Sherman</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Spalding Hall" onchange="addArrayPost(event)">Spalding Hall</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="St John Plant Science" onchange="addArrayPost(event)">St John
+                      Plant Science</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Stan Sheriff Center" onchange="addArrayPost(event)">Stan
+                      Sheriff
+                      Center</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Webster Hall" onchange="addArrayPost(event)">Webster Hall</label>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="Wist Hall" onchange="addArrayPost(event)">Wist Hall</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="container">
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+
+              <script>
+                var building = [];
+
+                function addArrayPost(e) {
+                  if (e.target.checked) {
+                    addArr(e.target);
+                  } else {
+                    removeArr(e.target);
+                  }
+                }
+                var arr = [];
+
+                function addArr(obj) {
+                  arr.push(obj.value);
+                  console.log(arr);
+                }
+
+                function removeArr(obj) {
+                  var index = arr.indexOf(obj.value);
+                  if (index > -1) {
+                    arr.splice(index, 1);
+                  }
+                }
+              </script>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-
-
-
-
-  <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-  <div class="modal-content" style="padding:50px;">
-
-    <form>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">x</button>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Agriculture Engineering" onchange="addArrayPost(event)">Agriculture Engineering</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Architecture" onchange="addArrayPost(event)">Architecture</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Bachman Hall" onchange="addArrayPost(event)">Bachman Hall</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Biomedical Science" onchange="addArrayPost(event)">Biomedical Science</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Business Administration Shidler" onchange="addArrayPost(event)">Business Administration Shidler</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Crawford Hall" onchange="addArrayPost(event)">Crawford Hall</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Dean Hall" onchange="addArrayPost(event)">Dean Hall</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Duke Kahanamoku Pool" onchange="addArrayPost(event)">Duke Kahanamoku Pool</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Environmental Protection" onchange="addArrayPost(event)">Environmental Protection</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Everly Hall" onchange="addArrayPost(event)">Everly Hall</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="George Hall" onchange="addArrayPost(event)">George Hall</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Gilmore Hall" onchange="addArrayPost(event)">Gilmore Hall</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Hamilton Library" onchange="addArrayPost(event)">Hamilton Library</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Hawaii Hall" onchange="addArrayPost(event)">Hawaii Hall</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Korean Studies" onchange="addArrayPost(event)">Korean Studies</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Hawaii Institute of Geophysics NOAA" onchange="addArrayPost(event)">Hawaii Institute of Geophysics NOAA</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Hawaii Institute of Geophysics Substations" onchange="addArrayPost(event)">Hawaii Institute of Geophysics Substations</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Health & Physical Education - Klum Gym" onchange="addArrayPost(event)">Health & Physical Education - Klum Gym</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Health & Physical Education" onchange="addArrayPost(event)">Health & Physical Education</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Keller Hall" onchange="addArrayPost(event)">Keller Hall</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Law Library" onchange="addArrayPost(event)">Law Library</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Law School" onchange="addArrayPost(event)">Law School</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Les Murakami Stadium" onchange="addArrayPost(event)">Les Murakami Stadium</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Marine Science" onchange="addArrayPost(event)">Marine Science</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Miller Hall" onchange="addArrayPost(event)">Miller Hall</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Moore Hall" onchange="addArrayPost(event)">Moore Hall</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Mudis Complex" onchange="addArrayPost(event)">Mudis Complex</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Pacific Biosciences Research Center" onchange="addArrayPost(event)">Pacific Biosciences Research Center</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Physical Science" onchange="addArrayPost(event)">Physical Science</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Pacific Ocean Science and Technology" onchange="addArrayPost(event)">Pacific Ocean Science and Technology</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Queen Liliuokalani Center of Student Services" onchange="addArrayPost(event)">Queen Liliuokalani Center of Student Services</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Quad Chiller Plant" onchange="addArrayPost(event)">Quad Chiller Plant</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Sakamaki Hall AC Equipment" onchange="addArrayPost(event)">Sakamaki Hall AC Equipment</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Sakamaki Hall" onchange="addArrayPost(event)">Sakamaki Hall</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Multipurpose Building" onchange="addArrayPost(event)">Multipurpose Building</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Saunders Hall" onchange="addArrayPost(event)">Saunders Hall</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Sherman" onchange="addArrayPost(event)">Sherman</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Spalding Hall" onchange="addArrayPost(event)">Spalding Hall</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="St John Plant Science" onchange="addArrayPost(event)">St John Plant Science</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Stan Sheriff Center" onchange="addArrayPost(event)">Stan Sheriff Center</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Webster Hall" onchange="addArrayPost(event)">Webster Hall</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Wist Hall" onchange="addArrayPost(event)">Wist Hall</label>
-      </div>
-
-      <div class="container">
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-      </div>
-
-      <script>
-      function addArrayPost(e) {
-          if(e.target.checked) {
-              addArr(e.target);
-          }
-          else {
-              removeArr(e.target);
-          }
-      }
-      var arr = [];
-      function addArr(obj){
-          arr.push(obj.value);
-      }
-      function removeArr(obj) {
-          var index = arr.indexOf(obj.value);
-          if (index > -1) {
-              arr.splice(index, 1);
-          }
-      }
-      </script>
-    </form>
-  </div>
-  </div>
-      </div></div></div>
 </body>
+
 </html>

@@ -5,7 +5,6 @@ $(function() {
   }, function(start, end, label) {
     console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
     var url = start.format('YYYY-MM-DDThh:mm:ss') + '/' + end.format('YYYY-MM-DDThh:mm:ss');
-    console.log("MEOW");
 
     var ctx = document.getElementById('bigDashboardChart').getContext("2d");
 
@@ -17,21 +16,22 @@ $(function() {
     gradientFill.addColorStop(1, "rgba(255, 255, 255, 0.24)");
 
     var all = "https://t6snn1lxw3.execute-api.us-west-2.amazonaws.com/default/DataS3GET/" + url;
-
     console.log(all);
-    console.log("HELLO");
-    $.getJSON(all, function (result) {
+    $.getJSON(all, function(result) {
         var labels = [], data = [];
-        var week_labels = [];
-        var week_data = [];
         var sum = 0;
-        for (var i = 0; i < result.length ; i++){
-              //sum += Math.round(result[i][column_name]);
+        for (var i = 1; i < result.length ; i++){
+              //sum += Math.round(result[i][column_name[j]]]);
               // From hours -> weekly data points
-                data.push(Math.round(result[i].kW_AG_ENGINEERING_MAIN_MTR));
+              for (var x = 0; x < arr.length ; x++){
+                sum += Math.round(result[i][arr[x]]);
+              }
+              // 24 hours
+              if (i % 24 == 0){
+                data.push(sum);
                 labels.push(result[i].Timestamp);
-
-
+            }
+              sum = 0;
         }
 
     var myChart = new Chart(ctx, {
@@ -39,16 +39,16 @@ $(function() {
       data: {
       labels: labels,
         datasets: [{
-          label: "Data",
-        //  borderColor: chartColor,
+          label: "Power Consumption",
+          borderColor: "#ff9900",
         //  pointBorderColor: chartColor,
-          pointBackgroundColor: "#1e3d60",
-          pointHoverBackgroundColor: "#1e3d60",
+          pointBackgroundColor: "#FF851B",
+          pointHoverBackgroundColor: "#FF851B",
         //  pointHoverBorderColor: chartColor,
-          pointBorderWidth: 1,
+          pointBorderWidth: 0.5,
           pointHoverRadius: 7,
           pointHoverBorderWidth: 2,
-          pointRadius: 5,
+          pointRadius: 1,
           fill: true,
           backgroundColor: gradientFill,
           borderWidth: 2,
@@ -78,7 +78,7 @@ $(function() {
         legend: {
           position: "bottom",
           fillStyle: "#FFF",
-          display: false
+          display: true
         },
         scales: {
           yAxes: [{
@@ -87,12 +87,14 @@ $(function() {
               fontStyle: "bold",
               beginAtZero: false,
               maxTicksLimit: 5,
-              padding: 10
+              padding: 10,
+              display: true,
+              labelString: 'Energy Consumption'
             },
             gridLines: {
-              drawTicks: true,
+              drawTicks: false,
               drawBorder: false,
-              display: true,
+              display: false,
               color: "rgba(255,255,255,0.1)",
               zeroLineColor: "transparent"
             }
@@ -102,7 +104,8 @@ $(function() {
             gridLines: {
               zeroLineColor: "transparent",
               display: false,
-              distribution: 'series'
+              distribution: 'series',
+              labelString: 'Date'
             },
             ticks: {
               padding: 10,
@@ -114,5 +117,5 @@ $(function() {
       }
     });
 });
-  });
+});
 });
