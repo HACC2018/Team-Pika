@@ -25,7 +25,7 @@ public class RDSToS3 {
             conn = DriverManager.getConnection(URL, USER, PASS);
 
             stmt = conn.createStatement();
-            String sql = "SELECT * FROM hacc.energy";
+            String sql = "SELECT * FROM hacc.energy WHERE fulldatetime>";
             ResultSet rs = stmt.executeQuery(sql);
 
             // Intermediate Java Object of the Data

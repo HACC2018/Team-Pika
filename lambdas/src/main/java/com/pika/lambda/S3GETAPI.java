@@ -3,10 +3,15 @@ package com.pika.lambda;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.S3Object;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class S3GETAPI {
 
@@ -39,21 +44,32 @@ public class S3GETAPI {
         String endtime;
     }
 
-    public String myHandler(RequestClass input) throws IOException {
-        String starttime = input.starttime;
-        String endtime = input.endtime;
-        String bucket_name = "teampika-tempbucket";
-        String filename = "LOL3.json";
+    public String S3GET(RequestClass input) throws ParseException {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
-        System.out.println(starttime + ' ' + endtime);
+        Calendar start_time = Calendar.getInstance();
+        start_time.setTimeInMillis(df.parse(input.starttime).getTime());
+        Calendar end_time = Calendar.getInstance();
+        end_time.setTimeInMillis(df.parse(input.endtime).getTime());
+        String bucket_name = "teampika-tempbucket";
+
+        JsonParser parser = new JsonParser();
+        JsonArray output = new JsonArray();
+        JsonElement jsonElement;
+
         AmazonS3 s3 = AmazonS3ClientBuilder.defaultClient();
-        S3Object item = s3.getObject(bucket_name, filename);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(item.getObjectContent()));
-        String temp;
-        StringBuilder builder = new StringBuilder();
-        while((temp = reader.readLine()) != null) {
-            builder.append(temp);
+
+        for(; start_time.compareTo(end_time) <= 0; start_time.add(Calendar.HOUR, 1)) {
+            String filename = String.format("%d/%d/%d/%d.json", start_time.get(Calendar.YEAR), start_time.get(Calendar.MONTH),
+                    start_time.get(Calendar.DAY_OF_MONTH), start_time.get(Calendar.HOUR_OF_DAY));
+            S3Object item = s3.getObject(bucket_name, filename);
+            long startTime = System.currentTimeMillis();
+            jsonElement = parser.parse(new InputStreamReader(item.getObjectContent()));
+            output.add(jsonElement);
+            long endTime = System.currentTimeMillis();
+            long timeElapsed = endTime - startTime;
+            System.out.println("Execution time in milliseconds: " + timeElapsed);
         }
-        return builder.toString();
+        return output.toString();
     }
 }
