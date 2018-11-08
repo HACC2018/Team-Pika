@@ -67,6 +67,8 @@ public class S3GETAPI {
 
         if(week_level) {
             Map<Integer, JsonObject> map = new HashMap<Integer, JsonObject>();
+            Calendar temptime = Calendar.getInstance();
+            temptime.setTimeInMillis(start_time.getTimeInMillis());
             for(; start_time.get(Calendar.MONTH) <= end_time.get(Calendar.MONTH); start_time.add(Calendar.MONTH, 1)) {
                 String filename = String.format("%d/%d.json", start_time.get(Calendar.YEAR), start_time.get(Calendar.MONTH));
                 S3Object item = s3.getObject(bucket_name, filename);
@@ -82,8 +84,8 @@ public class S3GETAPI {
                 }
             }
 
-            for(; start_time.compareTo(end_time) <= 0; start_time.add(Calendar.DAY_OF_MONTH, 1)) {
-                output.add(map.get(start_time.get(Calendar.DAY_OF_YEAR)));
+            for(; temptime.compareTo(end_time) <= 0; temptime.add(Calendar.DAY_OF_MONTH, 1)) {
+                output.add(map.get(temptime.get(Calendar.DAY_OF_YEAR)));
             }
             return output.toString();
         }

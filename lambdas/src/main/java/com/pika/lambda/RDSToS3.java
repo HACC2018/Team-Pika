@@ -28,10 +28,10 @@ public class RDSToS3 {
                 if (key.equals("fulldatetime")) {
                     switch (timeLevel) {
                         case Calendar.DAY_OF_MONTH:
-                            obj.addProperty("fulldatetime", agg.get(i).getAsJsonObject().get(key).getAsString().split(" ")[0]);
+                            obj.addProperty("fulldatetime", agg.get(i).getAsJsonObject().get(key).getAsString());
                             break;
                         case Calendar.MONTH:
-                            obj.addProperty("fulldatetime", agg.get(i).getAsJsonObject().get(key).getAsString().split(" ")[0]);
+                            obj.addProperty("fulldatetime", agg.get(i).getAsJsonObject().get(key).getAsString());
                             break;
                     }
                     continue;
