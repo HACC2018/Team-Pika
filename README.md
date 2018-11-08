@@ -24,6 +24,7 @@
 </div>
 
 ## Table of Contents
+- [Philosophy](#philosophy)
 - [Overview](#overview)
 
 ## Philosophy
