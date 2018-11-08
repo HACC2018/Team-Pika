@@ -39,6 +39,7 @@
         }
     }
     </style>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 </head>
 <body>
 <div class="sidebar pin-topleft z1 pad1">
@@ -46,7 +47,12 @@
     <header class="pad2">
       <h3>Energy Use By Building (kWh)</h3>
     </header>
-    <div id="info"></div>
+    <div id="info">
+        <center>
+            <input type="text" name="daterange" value="01/01/2017 - 01/02/2017" />
+        </center>
+    </div>
+    <br />
     <div id="legend" class="legend quiet col12 clearfix round-bottom mobile-cols">
       <div class="strong micro pad1x pad0y col2 center round-bottomleft" style="background-color: rgba(255, 255, 255, 0.5)"></div>
       <div class="strong micro pad1x pad0y col2 center" style="background-color:rgba(255, 204, 204, 0.5)"></div>
@@ -61,6 +67,7 @@
 <div id='map'></div>
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.0.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script>
 mapboxgl.accessToken = 'pk.eyJ1IjoidmlsdGFyaWEiLCJhIjoiY2l3MzZxa3g2MDJ2ZTJvbGVzaDhxYzN4MiJ9.qdvAux8_dDTMQPTdTjPVYw';
 var buildings = {
@@ -94,7 +101,7 @@ var buildings = {
     },
     "health_physical_education": {"geometry":{"type":"Polygon","coordinates":[[[-157.81805366277695,21.294532554846242],[-157.81807646155357,21.294345123458825],[-157.81788870692253,21.294132700930845],[-157.81791552901268,21.293877793492086],[-157.81816095113754,21.29367911532887],[-157.81810194253922,21.2936128892148],[-157.81809657812119,21.29359289641978],[-157.81811267137527,21.29357915137163],[-157.817884683609,21.293344235804554],[-157.81786993145943,21.293355481771115],[-157.81752794981003,21.29299561041468],[-157.81767949461937,21.29287190443243],[-157.81794637441635,21.293134310937646],[-157.81791016459465,21.293158052455468],[-157.81803488731384,21.293284257301735],[-157.81800404191017,21.29331299700405],[-157.81817570328712,21.29348793420135],[-157.81821325421333,21.293495431505136],[-157.8182253241539,21.293364228633394],[-157.81826958060265,21.293366727736796],[-157.8182427585125,21.29365412434595],[-157.81836077570915,21.29366287119045],[-157.81832858920097,21.294011494997918],[-157.81823471188545,21.294003997720452],[-157.81821459531784,21.294253906763828],[-157.81825214624405,21.294318883045506],[-157.81823068857193,21.294532554846242],[-157.81805366277695,21.294532554846242]]]},"type":"Feature","properties":{"extrude":"true","height":3,"min_height":0,"type":"building","underground":"false"},"id":5,"layer":{"id":"3d-buildings","type":"fill-extrusion","source":"composite","source-layer":"building","minzoom":15,"filter":["==","extrude","true"],"paint":{"fill-extrusion-color":"#aaa","fill-extrusion-height":["interpolate",["linear"],["zoom"],15,0,15.05,["get","height"]],"fill-extrusion-base":["interpolate",["linear"],["zoom"],15,0,15.05,["get","min_height"]]}},"source":"composite","sourceLayer":"building","state":{}
     },
-    "health_physical_education_klum_gym": {"geometry":{"type":"Polygon","coordinates":[[[-157.81913593411446,21.29573710819271],[-157.81868398189545,21.29529977150078],[-157.81893208622932,21.295078603592586],[-157.81938269734383,21.29551469140914],[-157.81913593411446,21.29573710819271]]]},"type":"Feature","properties":{"extrude":"true","height":3,"min_height":0,"type":"building","underground":"false"},"id":1,"layer":{"id":"3d-buildings","type":"fill-extrusion","source":"composite","source-layer":"building","minzoom":15,"filter":["==","extrude","true"],"paint":{"fill-extrusion-color":"#aaa","fill-extrusion-height":["interpolate",["linear"],["zoom"],15,0,15.05,["get","height"]],"fill-extrusion-base":["interpolate",["linear"],["zoom"],15,0,15.05,["get","min_height"]],"fill-extrusion-opacity":0.6}},"source":"composite","sourceLayer":"building","state":{}
+    "health_physical_education_klum_gym": {"geometry":{"type":"Polygon","coordinates":[[[-157.81913593411446,21.29573710819271],[-157.81868398189545,21.29529977150078],[-157.81893208622932,21.295078603592586],[-157.81938269734383,21.29551469140914],[-157.81913593411446,21.29573710819271]]]},"type":"Feature","properties":{"extrude":"true","height":3,"min_height":0,"type":"building","underground":"false"},"id":1,"layer":{"id":"3d-buildings","type":"fill-extrusion","source":"composite","source-layer":"building","minzoom":15,"filter":["==","extrude","true"],"paint":{"fill-extrusion-color":"#aaa","fill-extrusion-height":["interpolate",["linear"],["zoom"],15,0,15.05,["get","height"]],"fill-extrusion-base":["interpolate",["linear"],["zoom"],15,0,15.05,["get","min_height"]]}},"source":"composite","sourceLayer":"building","state":{}
     },
     "keller_hall": {"geometry":{"type":"Polygon","coordinates":[[[-157.81546398997307,21.29987424891702],[-157.81545594334602,21.29966933136882],[-157.816082239151,21.299646840400996],[-157.81609028577805,21.29985300747714],[-157.81546398997307,21.29987424891702]]]},"type":"Feature","properties":{"extrude":"true","height":3,"min_height":0,"type":"university","underground":"false"},"id":8,"layer":{"id":"3d-buildings","type":"fill-extrusion","source":"composite","source-layer":"building","minzoom":15,"filter":["==","extrude","true"],"paint":{"fill-extrusion-color":"#aaa","fill-extrusion-height":["interpolate",["linear"],["zoom"],15,0,15.05,["get","height"]],"fill-extrusion-base":["interpolate",["linear"],["zoom"],15,0,15.05,["get","min_height"]],"fill-extrusion-opacity":0.6}},"source":"composite","sourceLayer":"building","state":{}
     },
@@ -138,6 +145,8 @@ var buildings = {
     }
 }
 
+var reloads = 0;
+
 var bounds = [
     [-157.822126, 21.292134], // Southwest coordinates
     [-157.812251, 21.306181]  // Northeast coordinates
@@ -152,37 +161,59 @@ var map = new mapboxgl.Map({
     maxBounds: bounds
 });
 
-var url = 'https://t6snn1lxw3.execute-api.us-west-2.amazonaws.com/default/DataS3GET/2017-01-01T12:00:00/2017-01-02T11:59:59';
+$('input[name="daterange"]').daterangepicker({}, function (start, end, label) {
+    var url = 'https://t6snn1lxw3.execute-api.us-west-2.amazonaws.com/default/DataS3GET/' + start.format('YYYY-MM-DDThh:mm:ss') + '/' + end.format('YYYY-MM-DDThh:mm:ss');
+    updateData(url);
 
-$.getJSON(url, function (result) {
-    var max = 0;
-    for(let i = 0; i < result.length; i++) {
-        for (let key in result[i]) {
-            var buildingName = key.toLowerCase().split(' ').join('_');
-            if (buildingName in buildings) {
-                if ("sumOfKWh" in buildings[buildingName]) {
-                    buildings[buildingName].num_of_buildings += 1;
-                    buildings[buildingName].sumOfKWh += result[i][key];
-                } else {
-                    buildings[buildingName].num_of_buildings = 1;
-                    buildings[buildingName].sumOfKWh = result[i][key];
-                }
-                if (result[i][key] > max && result[i][key] != 10000) {
-                    max = result[i][key];
-                }
+    $($('.micro')[0]).text("");
+    $($('.micro')[1]).text("");
+    $($('.micro')[2]).text("");
+    $($('.micro')[3]).text("");
+    $($('.micro')[4]).text("");
+    $($('.micro')[5]).text("");
 
+    for (let b in buildings) {
+        buildings[b].num_of_buildings = 0;
+        buildings[b].sumOfKWh = 0;
+        map.removeLayer(b + reloads);
+    }
+    reloads += 1;
+});
+
+function updateData(url) {
+    $.getJSON(url, function (result) {
+        var max = 0;
+        for(let i = 0; i < result.length; i++) {
+            for (let key in result[i]) {
+                var buildingName = key.toLowerCase().split(' ').join('_');
+                if (buildingName in buildings) {
+                    if ("sumOfKWh" in buildings[buildingName]) {
+                        buildings[buildingName].num_of_buildings += 1;
+                        buildings[buildingName].sumOfKWh += result[i][key];
+                    } else {
+                        buildings[buildingName].num_of_buildings = 1;
+                        buildings[buildingName].sumOfKWh = result[i][key];
+                    }
+                    if (result[i][key] > max && result[i][key] != 10000) {
+                        max = result[i][key];
+                    }
+
+                }
             }
         }
-    }
 
-    $($('.micro')[5]).text(max.toFixed());
-    $($('.micro')[0]).text("0");
-    $($('.micro')[1]).text((2 * (100 / 6) * .01 * max.toFixed()).toFixed());
-    $($('.micro')[2]).text((3 * (100 / 6) * .01 * max.toFixed()).toFixed());
-    $($('.micro')[3]).text((4 * (100 / 6) * .01 * max.toFixed()).toFixed());
-    $($('.micro')[4]).text((5 * (100 / 6) * .01 * max.toFixed()).toFixed());
-    dataFinished();
-});
+        $($('.micro')[5]).text(max.toFixed());
+        $($('.micro')[0]).text("0");
+        $($('.micro')[1]).text((2 * (100 / 6) * .01 * max.toFixed()).toFixed());
+        $($('.micro')[2]).text((3 * (100 / 6) * .01 * max.toFixed()).toFixed());
+        $($('.micro')[3]).text((4 * (100 / 6) * .01 * max.toFixed()).toFixed());
+        $($('.micro')[4]).text((5 * (100 / 6) * .01 * max.toFixed()).toFixed());
+        dataFinished();
+    });
+}
+var url = 'https://t6snn1lxw3.execute-api.us-west-2.amazonaws.com/default/DataS3GET/2017-01-01T12:00:00/2017-01-02T11:59:59';
+
+updateData(url);
 
 var labelLayerId;
 
@@ -198,7 +229,7 @@ function dataFinished() {
         opacity *= .5;
 
         map.addLayer({
-            'id': b,
+            'id': b + reloads,
             'source': {
                 'type': 'geojson',
                 'data': {
@@ -250,7 +281,14 @@ function dataFinished() {
 
             new mapboxgl.Popup()
                 .setLngLat([lng, lat])
-                .setHTML(`<h3>Average Hourly Power Consumption: ${avgHourPower(b)}kWh</h3>`)
+                .setHTML(`
+                    <div>
+                    <center>
+                        <h2><u>${b.split('_').join(' ').toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}</u></h2>
+                    </center>
+                    <h3>Average Hourly Power Consumption: ${avgHourPower(b)}kWh</h3>
+                    </div>
+                    `)
                 .addTo(map);
         });
         
