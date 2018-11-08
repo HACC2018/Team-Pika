@@ -57,7 +57,7 @@ $(function () {
         // 24 hours
         if (i % 1 == 0) {
           data.push(sum);
-          labels.push(result[i].fulldatetime.split(" ")[0]);
+          labels.push(result[i].fulldatetime.split(" "));
         }
         sum = 0;
       }
