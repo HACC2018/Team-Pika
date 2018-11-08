@@ -215,24 +215,26 @@ $('input[name="daterange"]').daterangepicker({}, function (start, end, label) {
     reloads += 1;
 });
 
+var max = 0;
 function updateData(url) {
     $.getJSON(url, function (result) {
-        var max = 0;
+        max = 0;
         for(let i = 0; i < result.length; i++) {
             for (let key in result[i]) {
                 var buildingName = key.toLowerCase().split(' ').join('_');
                 if (buildingName in buildings) {
-                    if ("sumOfKWh" in buildings[buildingName]) {
-                        buildings[buildingName].num_of_buildings += 1;
-                        buildings[buildingName].sumOfKWh += result[i][key];
-                    } else {
-                        buildings[buildingName].num_of_buildings = 1;
-                        buildings[buildingName].sumOfKWh = result[i][key];
+                    if (result[i][key] != 10000) {
+                        if ("sumOfKWh" in buildings[buildingName]) {
+                            buildings[buildingName].num_of_buildings += 1;
+                            buildings[buildingName].sumOfKWh += result[i][key];
+                        } else {
+                            buildings[buildingName].num_of_buildings = 1;
+                            buildings[buildingName].sumOfKWh = result[i][key];
+                        }
+                        if (result[i][key] > max) {
+                            max = result[i][key];
+                        }
                     }
-                    if (result[i][key] > max && result[i][key] != 10000) {
-                        max = result[i][key];
-                    }
-
                 }
             }
         }
@@ -254,14 +256,11 @@ var labelLayerId;
 
 function dataFinished() {
     for (let b in buildings) {
-        var opacity = 1/2;
+        var opacity = .5;
         if ("sumOfKWh" in buildings[b] && "num_of_buildings" in buildings[b]) {
-            opacity = (buildings[b].sumOfKWh / buildings[b].num_of_buildings);
+            opacity = (buildings[b].sumOfKWh / buildings[b].num_of_buildings) / max;
+            opacity *= .5;
         }
-        while (opacity > 1) {
-            opacity = opacity * .1;
-        }
-        opacity *= .5;
 
         map.addLayer({
             'id': b + reloads,
@@ -313,6 +312,9 @@ function dataFinished() {
             function avgHourPower(b) {
                 return (buildings[b].sumOfKWh / buildings[b].num_of_buildings).toFixed();
             }
+            function totalPower(b) {
+                return (buildings[b].sumOfKWh / buildings[b].num_of_buildings).toFixed();
+            }
 
             new mapboxgl.Popup()
                 .setLngLat([lng, lat])
@@ -322,6 +324,7 @@ function dataFinished() {
                         <h2><u>${b.split('_').join(' ').toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}</u></h2>
                     </center>
                     <h3>Average Hourly Power Consumption: ${avgHourPower(b)}kWh</h3>
+                    <h3>Total Power Consumption: ${totalPower(b)}kWh</h3>
                     </div>
                     `)
                 .addTo(map);
@@ -330,11 +333,20 @@ function dataFinished() {
     // Update Right Sidebar
     var sortable = [];
     for (let b in buildings) {
-        sortable.push([b, buildings[b].sumOfKWh, buildings[b].geometry.coordinates[0][0]]);
+        sortable.push([b, buildings[b].sumOfKWh / buildings[b].num_of_buildings, buildings[b].geometry.coordinates[0][0]]);
     }
+
+    for (let i = 0; i < sortable.length; i++) {
+        if (isNaN(sortable[i][1])) {
+            sortable.splice(i, 1);
+            i -= 1;
+        }
+    }
+
     sortable.sort(function(a, b) {
         return b[1] - a[1];
     })
+
     for (let i = 0; i < 10; i++) {
         var buildingListItem = $(`<div style="cursor: pointer" class="txt-li">
                 <strong>
