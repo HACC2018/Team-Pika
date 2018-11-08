@@ -27,7 +27,7 @@
 - [Overview](#overview)
 
 ## Overview
-While in recent years energy use across the nation has sharply increased, the State of Hawaii prides itself on being the first and only state to have [Net Zero Energy](https://www.hawaii.edu/sustainability/commitment/netzero2035/) goals; both for the University and for the state. This developed visualization tool shows the University of Hawaii at Manoa's progress towards a cleaner future by the year 2035.
+While in recent years energy use across the nation has sharply increased, the State of Hawaii prides itself on being the first and currently the only state to have [Net Zero Energy](https://www.hawaii.edu/sustainability/commitment/netzero2035/) goals; both for the University and for the state. This developed visualization tool shows the University of Hawaii at Manoa's progress towards a cleaner and more sustainable future by the year 2035.
 
 ## 
 
