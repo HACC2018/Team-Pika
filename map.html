@@ -327,17 +327,24 @@ function dataFinished() {
     // Update Right Sidebar
     var sortable = [];
     for (let b in buildings) {
-        sortable.push([b, buildings[b].sumOfKWh]);
+        sortable.push([b, buildings[b].sumOfKWh, buildings[b].geometry.coordinates[0][0]]);
     }
     sortable.sort(function(a, b) {
-        return a[1] - b[1];
+        return b[1] - a[1];
     })
     for (let i = 0; i < 10; i++) {
-        $("#building-list").append(`<div class="txt-li">
-            <strong>
-            ${sortable[i][0].split('_').join(' ').toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}
-            </strong>
+        var buildingListItem = $(`<div style="cursor: pointer" class="txt-li">
+                <strong>
+                ${sortable[i][0].split('_').join(' ').toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}
+                </strong>
             </div>`);
+
+        buildingListItem.click(function() {
+            map.flyTo({
+                center: [sortable[i][2][0], sortable[i][2][1]]
+            });
+        });
+        $("#building-list").append(buildingListItem);
     }
 }
 
