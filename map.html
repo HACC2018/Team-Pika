@@ -6,31 +6,63 @@
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.css' rel='stylesheet' />
+    <link rel="stylesheet" type="text/css" href="https://www.mapbox.com/base/latest/base.css">
     <style>
         body { margin:0; padding:0; }
         #map { position:absolute; top:0; bottom:0; width:100%; }
     </style>    
+    <style>
+        .sidebar { width:300px; }
+        .legend { background-color:#f1f1f0; }
+        .lifted { box-shadow:0 1px 2px rgba(0,0,0,0.10); }
+
+        /* Mobile */
+        @media only screen and (max-width:640px) {
+        .sidebar {
+            position:absolute;
+            width:100%;
+            padding:0;
+            margin:0;
+            top:auto;
+            bottom:0;
+            height:25%;
+            z-index:10;
+        }
+        .sidebar-inner {
+            height:100%;
+            border-radius:0;
+        }
+        .sidebar-inner > * { border-radius:0; }
+        .legend {
+            position:absolute;
+            bottom:0;
+        }
+    }
+    </style>
 </head>
 <body>
+<div class="sidebar pin-topleft z1 pad1">
+  <div class="sidebar-inner fill-white round lifted">
+    <header class="pad2">
+      <h3>Energy Use By Building (kWh)</h3>
+    </header>
+    <div id="info"></div>
+    <div id="legend" class="legend quiet col12 clearfix round-bottom mobile-cols">
+      <div class="strong micro pad1x pad0y col2 center round-bottomleft" style="background-color: rgba(255, 255, 255, 0.5)"></div>
+      <div class="strong micro pad1x pad0y col2 center" style="background-color:rgba(255, 204, 204, 0.5)"></div>
+      <div class="strong micro pad1x pad0y col2 center" style="background-color:rgba(255, 153, 153, 0.5)"></div>
+      <div class="strong micro pad1x pad0y col2 center" style="background-color:rgba(255, 102, 102, 0.5)"></div>
+      <div class="strong micro pad1x pad0y col2 center" style="background-color:rgba(255, 51, 51, 0.5)"></div>
+      <div class="strong micro pad1x pad0y col2 center round-bottomright" style="background-color: rgba(255, 0, 0, 0.5)"></div>
+    </div>
+  </div>
+</div>
 
 <div id='map'></div>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.9.0.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script>
 mapboxgl.accessToken = 'pk.eyJ1IjoidmlsdGFyaWEiLCJhIjoiY2l3MzZxa3g2MDJ2ZTJvbGVzaDhxYzN4MiJ9.qdvAux8_dDTMQPTdTjPVYw';
-var buildings = [];
-var bounds = [
-    [-157.822126, 21.292134], // Southwest coordinates
-    [-157.812251, 21.306181]  // Northeast coordinates
-]; 
-var map = new mapboxgl.Map({
-    style: 'mapbox://styles/mapbox/light-v9',
-    center: [-157.8199, 21.2987],
-    zoom: 17,
-    pitch: 45,
-    bearing: -17.6,
-    container: 'map',
-    maxBounds: bounds
-});
-
 var buildings = {
     "agriculture_engineering": {"geometry":{"type":"Polygon","coordinates":[[[-157.815899848938,21.30180470813501],[-157.81589180231094,21.301526073839824],[-157.8163719177246,21.301514828498426],[-157.81637996435165,21.301793462814942],[-157.815899848938,21.30180470813501]]]},"type":"Feature","properties":{"extrude":"true","height":3,"min_height":0,"type":"university","underground":"false"},"id":8,"layer":{"id":"3d-buildings","type":"fill-extrusion","source":"composite","source-layer":"building","minzoom":15,"filter":["==","extrude","true"],"paint":{"fill-extrusion-color":"#aaa","fill-extrusion-height":["interpolate",["linear"],["zoom"],15,0,15.05,["get","height"]],"fill-extrusion-base":["interpolate",["linear"],["zoom"],15,0,15.05,["get","min_height"]],"fill-extrusion-opacity":0.6}},"source":"composite","sourceLayer":"building","state":{}
     },
@@ -60,7 +92,7 @@ var buildings = {
     },
     "hawaii_institue_of_geophysics_noaa": {"geometry":{"type":"Polygon","coordinates":[[[-157.816264629364,21.298546028269215],[-157.81625255942345,21.29829487701359],[-157.8165154159069,21.29828488093483],[-157.81650200486183,21.297988746793237],[-157.81627669930458,21.29799749337981],[-157.81626999378204,21.29783880522818],[-157.81670585274696,21.297821312035623],[-157.81673669815063,21.29852853516084],[-157.816264629364,21.298546028269215]]]},"type":"Feature","properties":{"extrude":"true","height":3,"min_height":0,"type":"university","underground":"false"},"id":10,"layer":{"id":"3d-buildings","type":"fill-extrusion","source":"composite","source-layer":"building","minzoom":15,"filter":["==","extrude","true"],"paint":{"fill-extrusion-color":"#aaa","fill-extrusion-height":["interpolate",["linear"],["zoom"],15,0,15.05,["get","height"]],"fill-extrusion-base":["interpolate",["linear"],["zoom"],15,0,15.05,["get","min_height"]],"fill-extrusion-opacity":0.6}},"source":"composite","sourceLayer":"building","state":{}
     },
-    "health_physical_education": {"geometry":{"type":"Polygon","coordinates":[[[-157.81805366277695,21.294532554846242],[-157.81807646155357,21.294345123458825],[-157.81788870692253,21.294132700930845],[-157.81791552901268,21.293877793492086],[-157.81816095113754,21.29367911532887],[-157.81810194253922,21.2936128892148],[-157.81809657812119,21.29359289641978],[-157.81811267137527,21.29357915137163],[-157.817884683609,21.293344235804554],[-157.81786993145943,21.293355481771115],[-157.81752794981003,21.29299561041468],[-157.81767949461937,21.29287190443243],[-157.81794637441635,21.293134310937646],[-157.81791016459465,21.293158052455468],[-157.81803488731384,21.293284257301735],[-157.81800404191017,21.29331299700405],[-157.81817570328712,21.29348793420135],[-157.81821325421333,21.293495431505136],[-157.8182253241539,21.293364228633394],[-157.81826958060265,21.293366727736796],[-157.8182427585125,21.29365412434595],[-157.81836077570915,21.29366287119045],[-157.81832858920097,21.294011494997918],[-157.81823471188545,21.294003997720452],[-157.81821459531784,21.294253906763828],[-157.81825214624405,21.294318883045506],[-157.81823068857193,21.294532554846242],[-157.81805366277695,21.294532554846242]]]},"type":"Feature","properties":{"extrude":"true","height":3,"min_height":0,"type":"building","underground":"false"},"id":5,"layer":{"id":"3d-buildings","type":"fill-extrusion","source":"composite","source-layer":"building","minzoom":15,"filter":["==","extrude","true"],"paint":{"fill-extrusion-color":"#aaa","fill-extrusion-height":["interpolate",["linear"],["zoom"],15,0,15.05,["get","height"]],"fill-extrusion-base":["interpolate",["linear"],["zoom"],15,0,15.05,["get","min_height"]],"fill-extrusion-opacity":0.6}},"source":"composite","sourceLayer":"building","state":{}
+    "health_physical_education": {"geometry":{"type":"Polygon","coordinates":[[[-157.81805366277695,21.294532554846242],[-157.81807646155357,21.294345123458825],[-157.81788870692253,21.294132700930845],[-157.81791552901268,21.293877793492086],[-157.81816095113754,21.29367911532887],[-157.81810194253922,21.2936128892148],[-157.81809657812119,21.29359289641978],[-157.81811267137527,21.29357915137163],[-157.817884683609,21.293344235804554],[-157.81786993145943,21.293355481771115],[-157.81752794981003,21.29299561041468],[-157.81767949461937,21.29287190443243],[-157.81794637441635,21.293134310937646],[-157.81791016459465,21.293158052455468],[-157.81803488731384,21.293284257301735],[-157.81800404191017,21.29331299700405],[-157.81817570328712,21.29348793420135],[-157.81821325421333,21.293495431505136],[-157.8182253241539,21.293364228633394],[-157.81826958060265,21.293366727736796],[-157.8182427585125,21.29365412434595],[-157.81836077570915,21.29366287119045],[-157.81832858920097,21.294011494997918],[-157.81823471188545,21.294003997720452],[-157.81821459531784,21.294253906763828],[-157.81825214624405,21.294318883045506],[-157.81823068857193,21.294532554846242],[-157.81805366277695,21.294532554846242]]]},"type":"Feature","properties":{"extrude":"true","height":3,"min_height":0,"type":"building","underground":"false"},"id":5,"layer":{"id":"3d-buildings","type":"fill-extrusion","source":"composite","source-layer":"building","minzoom":15,"filter":["==","extrude","true"],"paint":{"fill-extrusion-color":"#aaa","fill-extrusion-height":["interpolate",["linear"],["zoom"],15,0,15.05,["get","height"]],"fill-extrusion-base":["interpolate",["linear"],["zoom"],15,0,15.05,["get","min_height"]]}},"source":"composite","sourceLayer":"building","state":{}
     },
     "health_physical_education_klum_gym": {"geometry":{"type":"Polygon","coordinates":[[[-157.81913593411446,21.29573710819271],[-157.81868398189545,21.29529977150078],[-157.81893208622932,21.295078603592586],[-157.81938269734383,21.29551469140914],[-157.81913593411446,21.29573710819271]]]},"type":"Feature","properties":{"extrude":"true","height":3,"min_height":0,"type":"building","underground":"false"},"id":1,"layer":{"id":"3d-buildings","type":"fill-extrusion","source":"composite","source-layer":"building","minzoom":15,"filter":["==","extrude","true"],"paint":{"fill-extrusion-color":"#aaa","fill-extrusion-height":["interpolate",["linear"],["zoom"],15,0,15.05,["get","height"]],"fill-extrusion-base":["interpolate",["linear"],["zoom"],15,0,15.05,["get","min_height"]],"fill-extrusion-opacity":0.6}},"source":"composite","sourceLayer":"building","state":{}
     },
@@ -106,21 +138,65 @@ var buildings = {
     }
 }
 
-// The 'building' layer in the mapbox-streets vector source contains building-height
-// data from OpenStreetMap.
-map.on('load', function() {
-    // Insert the layer beneath any symbol layer.
-    var layers = map.getStyle().layers;
+var bounds = [
+    [-157.822126, 21.292134], // Southwest coordinates
+    [-157.812251, 21.306181]  // Northeast coordinates
+]; 
+var map = new mapboxgl.Map({
+    style: 'mapbox://styles/mapbox/light-v9',
+    center: [-157.8199, 21.2987],
+    zoom: 17,
+    pitch: 45,
+    bearing: -17.6,
+    container: 'map',
+    maxBounds: bounds
+});
 
-    var labelLayerId;
-    for (var i = 0; i < layers.length; i++) {
-        if (layers[i].type === 'symbol' && layers[i].layout['text-field']) {
-            labelLayerId = layers[i].id;
-            break;
+var url = 'https://t6snn1lxw3.execute-api.us-west-2.amazonaws.com/default/DataS3GET/2017-01-01T12:00:00/2017-01-02T11:59:59';
+
+$.getJSON(url, function (result) {
+    var max = 0;
+    for(let i = 0; i < result.length; i++) {
+        for (let key in result[i]) {
+            var buildingName = key.toLowerCase().split(' ').join('_');
+            if (buildingName in buildings) {
+                if ("sumOfKWh" in buildings[buildingName]) {
+                    buildings[buildingName].num_of_buildings += 1;
+                    buildings[buildingName].sumOfKWh += result[i][key];
+                } else {
+                    buildings[buildingName].num_of_buildings = 1;
+                    buildings[buildingName].sumOfKWh = result[i][key];
+                }
+                if (result[i][key] > max && result[i][key] != 10000) {
+                    max = result[i][key];
+                }
+
+            }
         }
     }
 
+    $($('.micro')[5]).text(max.toFixed());
+    $($('.micro')[0]).text("0");
+    $($('.micro')[1]).text((2 * (100 / 6) * .01 * max.toFixed()).toFixed());
+    $($('.micro')[2]).text((3 * (100 / 6) * .01 * max.toFixed()).toFixed());
+    $($('.micro')[3]).text((4 * (100 / 6) * .01 * max.toFixed()).toFixed());
+    $($('.micro')[4]).text((5 * (100 / 6) * .01 * max.toFixed()).toFixed());
+    dataFinished();
+});
+
+var labelLayerId;
+
+function dataFinished() {
     for (let b in buildings) {
+        var opacity = 1/2;
+        if ("sumOfKWh" in buildings[b] && "num_of_buildings" in buildings[b]) {
+            opacity = (buildings[b].sumOfKWh / buildings[b].num_of_buildings);
+        }
+        while (opacity > 1) {
+            opacity = opacity * .1;
+        }
+        opacity *= .5;
+
         map.addLayer({
             'id': b,
             'source': {
@@ -134,7 +210,8 @@ map.on('load', function() {
             'type': 'fill-extrusion',
             'minzoom': 15,
             'paint': {
-                'fill-extrusion-color': 'hotpink',
+                'fill-extrusion-color': '#FF0000',
+                'fill-extrusion-opacity': opacity,
 
                 // use an 'interpolate' expression to add a smooth transition effect to the
                 // buildings as the user zooms in
@@ -147,10 +224,10 @@ map.on('load', function() {
                     "interpolate", ["linear"], ["zoom"],
                     15, 0,
                     15.05, ["get", "min_height"]
-                ],
-                'fill-extrusion-opacity': .6
+                ]
             }
         }, labelLayerId);
+
         map.on('click', b, function(e) {
             // Popups on clicks
             var coordinates = e.features[0].geometry.coordinates.slice()[0];
@@ -167,16 +244,39 @@ map.on('load', function() {
             lng = lng / coordinates.length;
             lat = lat / coordinates.length;
 
+            function avgHourPower(b) {
+                return (buildings[b].sumOfKWh / buildings[b].num_of_buildings).toFixed();
+            }
+
             new mapboxgl.Popup()
                 .setLngLat([lng, lat])
-                .setHTML("<h3>Hourly Power Consumption: 56.9 kWh</h3>")
+                .setHTML(`<h3>Average Hourly Power Consumption: ${avgHourPower(b)}kWh</h3>`)
                 .addTo(map);
         });
+        
+        
     }
+}
+
+
+// The 'building' layer in the mapbox-streets vector source contains building-height
+// data from OpenStreetMap.
+map.on('load', function() {
+    // Insert the layer beneath any symbol layer.
+    var layers = map.getStyle().layers;
+
+    for (var i = 0; i < layers.length; i++) {
+        if (layers[i].type === 'symbol' && layers[i].layout['text-field']) {
+            labelLayerId = layers[i].id;
+            break;
+        }
+    }
+
 
 });
 
 </script>
+
 
 </body>
 </html>
