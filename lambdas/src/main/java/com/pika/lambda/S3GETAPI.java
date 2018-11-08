@@ -5,13 +5,17 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.S3Object;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.io.InputStreamReader;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class S3GETAPI {
 
@@ -57,18 +61,44 @@ public class S3GETAPI {
         JsonArray output = new JsonArray();
         JsonElement jsonElement;
 
+        boolean week_level = 7 < end_time.get(Calendar.DAY_OF_YEAR) - start_time.get(Calendar.DAY_OF_YEAR);
+
         AmazonS3 s3 = AmazonS3ClientBuilder.defaultClient();
 
-        for(; start_time.compareTo(end_time) <= 0; start_time.add(Calendar.HOUR, 1)) {
-            String filename = String.format("%d/%d/%d/%d.json", start_time.get(Calendar.YEAR), start_time.get(Calendar.MONTH),
-                    start_time.get(Calendar.DAY_OF_MONTH), start_time.get(Calendar.HOUR_OF_DAY));
-            S3Object item = s3.getObject(bucket_name, filename);
-            long startTime = System.currentTimeMillis();
-            jsonElement = parser.parse(new InputStreamReader(item.getObjectContent()));
-            output.add(jsonElement);
-            long endTime = System.currentTimeMillis();
-            long timeElapsed = endTime - startTime;
-            System.out.println("Execution time in milliseconds: " + timeElapsed);
+        if(week_level) {
+            Map<Integer, JsonObject> map = new HashMap<Integer, JsonObject>();
+            for(; start_time.get(Calendar.MONTH) <= end_time.get(Calendar.MONTH); start_time.add(Calendar.MONTH, 1)) {
+                String filename = String.format("%d/%d.json", start_time.get(Calendar.YEAR), start_time.get(Calendar.MONTH));
+                S3Object item = s3.getObject(bucket_name, filename);
+                jsonElement = parser.parse(new InputStreamReader(item.getObjectContent()));
+                JsonArray tempArray = jsonElement.getAsJsonArray();
+
+                Calendar tempTime = Calendar.getInstance();
+
+                for(int i = 0; i < tempArray.size(); i++) {
+                    JsonObject tempObj = tempArray.get(i).getAsJsonObject();
+                    tempTime.setTimeInMillis(Timestamp.valueOf(tempObj.get("fulldatetime").getAsString()).getTime());
+                    map.put(tempTime.get(Calendar.DAY_OF_YEAR), tempObj);
+                }
+            }
+
+            for(; start_time.compareTo(end_time) <= 0; start_time.add(Calendar.DAY_OF_MONTH, 1)) {
+                output.add(map.get(start_time.get(Calendar.DAY_OF_YEAR)));
+            }
+            return output.toString();
+        }
+
+        for(; start_time.compareTo(end_time) <= 0; start_time.add(Calendar.DAY_OF_MONTH, 1)) {
+            for(; start_time.compareTo(end_time) <= 0; start_time.add(Calendar.DAY_OF_MONTH, 1)) {
+                String filename = String.format("%d/%d/%d.json", start_time.get(Calendar.YEAR), start_time.get(Calendar.MONTH),
+                        start_time.get(Calendar.DAY_OF_MONTH));
+                S3Object item = s3.getObject(bucket_name, filename);
+                jsonElement = parser.parse(new InputStreamReader(item.getObjectContent()));
+                JsonArray tempArray = jsonElement.getAsJsonArray();
+                for(int i = 0; i < tempArray.size(); i++) {
+                    output.add(tempArray.get(i));
+                }
+            }
         }
         return output.toString();
     }
