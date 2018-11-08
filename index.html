@@ -121,7 +121,7 @@
               <div class="card">
                 <div class="card-header">
                   <h5 class="card-category">Power</h5>
-                  <h4 class="card-title">Average Power Consumption</h4>
+                  <h4 class="card-title">Average Power Consumption (kWh)</h4>
                   <div class="chart-area">
                     <div class="container">
                       <div class="row">
@@ -136,10 +136,11 @@
                                       backgroundColor: ["#0fdc63", "#fd9704", "#ff7143"],
                                       borderWidth: 0,
                                       gaugeData: {
-                                          value: 7777,
+                                          value: 60,
                                           valueColor: "#ff7143"
                                       },
-                                      gaugeLimits: [0, 56, 7000, 10000]
+                                      // Lowest, Avg, Max, Unreachable
+                                      gaugeLimits: [0, 56, 148, 250]
                                   }]
                               },
                               options: {
@@ -181,10 +182,10 @@
                                           backgroundColor: ["#0fdc63", "#fd9704", "#ff7143"],
                                           borderWidth: 0,
                                           gaugeData: {
-                                              value: 7777,
+                                              value: 21.0936,
                                               valueColor: "#ff7143"
                                           },
-                                          gaugeLimits: [0, 3000, 7000, 10000]
+                                          gaugeLimits: [0, 20, 52, 88]
                                       }]
                                   },
                                   options: {
