@@ -20,7 +20,7 @@ demo = {
     gradientChartOptionsConfiguration = {
       maintainAspectRatio: false,
       legend: {
-        display: false
+        display: true,
       },
       tooltips: {
         bodySpacing: 4,
@@ -112,7 +112,7 @@ demo = {
     gradientChartOptionsConfiguration = {
       maintainAspectRatio: false,
       legend: {
-        display: false
+        display: true
       },
       tooltips: {
         bodySpacing: 4,
@@ -263,7 +263,7 @@ demo = {
         legend: {
           position: "bottom",
           fillStyle: "#FFF",
-          display: false
+          display: true
         },
         scales: {
           yAxes: [{
@@ -397,7 +397,7 @@ demo = {
       options: {
         maintainAspectRatio: false,
         legend: {
-          display: false
+          display: true
         },
         tooltips: {
           bodySpacing: 4,

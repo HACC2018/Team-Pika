@@ -30,6 +30,7 @@ $(function () {
   }, function (start, end, label) {
     console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
     var url = start.format('YYYY-MM-DDThh:mm:ss') + '/' + end.format('YYYY-MM-DDThh:mm:ss');
+
     var ctx = document.getElementById('bigDashboardChart').getContext("2d");
 
     var gradientStroke = ctx.createLinearGradient(500, 0, 100, 0);
@@ -56,7 +57,7 @@ $(function () {
         // 24 hours
         if (i % 1 == 0) {
           data.push(sum);
-          labels.push(result[i].fulldatetime.split(" "));
+          labels.push(result[i].fulldatetime.split(" ")[0]);
         }
         sum = 0;
       }
