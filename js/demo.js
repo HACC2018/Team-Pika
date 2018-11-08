@@ -44,7 +44,7 @@ $(function () {
     console.log(all);
     $.getJSON(all, function (result) {
       var labels = [],
-        data = [];
+          data = [];
       var sum = 0;
       console.log(result);
       for (var i = 1; i < result.length; i++) {
@@ -57,7 +57,7 @@ $(function () {
         // 24 hours
         if (i % 1 == 0) {
           data.push(sum);
-          labels.push(result[i].Timestamp);
+          labels.push(result[i].fulldatetime.split(" ")[0]);
         }
         sum = 0;
       }
