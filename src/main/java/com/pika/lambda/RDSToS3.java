@@ -18,10 +18,7 @@ public class RDSToS3 {
         JsonObject obj = new JsonObject();
         for (int i = 0; i < agg.size(); i++) {
             for (String key : agg.get(i).getAsJsonObject().keySet()) {
-                if (key.equals("fulldatetime")) {
-                    obj.addProperty("fulldatetime", agg.get(i).getAsJsonObject().get(key).getAsString());
-                    continue;
-                }
+                if (key.equals("FullDateTime")) continue;
                 if (obj.get(key) == null) {
                     obj.addProperty(key, agg.get(i).getAsJsonObject().get(key).getAsInt());
                 }
@@ -61,15 +58,15 @@ public class RDSToS3 {
             AmazonS3 s3 = AmazonS3ClientBuilder.defaultClient();
             String bucketName = "teampika-tempbucket";
 
-            int prevDay, prevMonth, prevYear;
-            prevDay = prevMonth = prevYear = -1;
+            rs.next();
+            cal.setTimeInMillis(rs.getTimestamp(1).getTime());
+            int prevDay = cal.get(Calendar.DAY_OF_MONTH);
+            int prevMonth = cal.get(Calendar.MONTH);
+            int prevYear = cal.get(Calendar.YEAR);
 
             while (rs.next()) {
-                if (prevYear == -1) {
-                    cal.setTimeInMillis(rs.getTimestamp(1).getTime());
-                    prevDay = cal.get(Calendar.DAY_OF_MONTH);
-                    prevMonth = cal.get(Calendar.MONTH);
-                    prevYear = cal.get(Calendar.YEAR);
+                if (prevDay == -1) {
+
                 }
 
                 JsonObject obj = new JsonObject();
@@ -85,20 +82,21 @@ public class RDSToS3 {
 
                 if (prevDay != cal.get(Calendar.DAY_OF_MONTH)) {
                     aggregateJsonArray(days, hours);
-                    String filename = String.format("%d/%d/%d.json", prevYear, prevMonth, prevDay);
+                    String filename = String.format("%d/%d/%d.json", cal.get(Calendar.YEAR), cal.get(Calendar.MONTH),
+                            cal.get(Calendar.DAY_OF_MONTH));
                     s3.putObject(bucketName, filename, hours.toString());
                     hours = new JsonArray();
                 }
 
                 if (prevMonth != cal.get(Calendar.MONTH)) {
                     aggregateJsonArray(months, days);
-                    String filename = String.format("%d/%d.json", prevYear, prevMonth);
+                    String filename = String.format("%d/%d.json", cal.get(Calendar.YEAR), cal.get(Calendar.MONTH));
                     s3.putObject(bucketName, filename, days.toString());
                     days = new JsonArray();
                 }
 
                 if (prevYear != cal.get(Calendar.YEAR)) {
-                    String filename = String.format("%d.json", prevYear);
+                    String filename = String.format("%d.json", cal.get(Calendar.YEAR));
                     s3.putObject(bucketName, filename, months.toString());
                     months = new JsonArray();
                 }

@@ -1,5 +1,6 @@
 data.txt
 .DS_Store
+lambdas/.idea/*
 
 # Created by https://www.gitignore.io/api/maven
 # Edit at https://www.gitignore.io/?templates=maven
