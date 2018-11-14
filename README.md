@@ -42,7 +42,7 @@ This dashboard will also help the University of Hawaii monitor and analyze their
 
 The project minimizes the impact on energy by taking advantage of AWS Lambda Serverless Computing to scale and run only when computing resources are required. The data has been stored into aggregated variants on AWS S3 to explore various time intervals immediately upon request. This is accomplished by consuming the data using a REST API through AWS API Gateway. The visual exploration focuses on monitoring the energy levels directly through a dashboard and geographically using a 3D map.
 
-For the front-end, we used Bootstrap for the dashboard design, Chartjs for our graph data visualizations, and mapbox for our 3D building visualization. 
+For the front-end, we used Bootstrap for the dashboard design, ChartJS for our graph data visualizations, and mapbox for our 3D building visualization. 
 
 ## License
 [MIT](https://tldrlegal.com/license/mit-license)
