@@ -212,7 +212,6 @@ $('input[name="daterange"]').daterangepicker({}, function (start, end, label) {
         buildings[b].sumOfKWh = 0;
         map.removeLayer(b + reloads);
     }
-    reloads += 1;
 });
 
 var max = 0;
@@ -246,6 +245,7 @@ function updateData(url) {
         $($('.micro')[3]).text((4 * (100 / 6) * .01 * max.toFixed()).toFixed());
         $($('.micro')[4]).text((5 * (100 / 6) * .01 * max.toFixed()).toFixed());
         dataFinished();
+        reloads += 1;
     });
 }
 var url = 'https://t6snn1lxw3.execute-api.us-west-2.amazonaws.com/default/DataS3GET/2017-01-01T12:00:00/2017-01-02T11:59:59';
