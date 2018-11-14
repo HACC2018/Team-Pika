@@ -283,7 +283,9 @@ function dataFinished() {
                 'fill-extrusion-height': [
                     "interpolate", ["linear"], ["zoom"],
                     15, 0,
-                    15.05, ["get", "height"]
+                    15.05,
+                    (((buildings[b].sumOfKWh / buildings[b].num_of_buildings) / max) * 100 || 3)
+                    //["get", "height"]
                 ],
                 'fill-extrusion-base': [
                     "interpolate", ["linear"], ["zoom"],
