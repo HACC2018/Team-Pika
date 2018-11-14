@@ -10,7 +10,7 @@
     <style>
         body { margin:0; padding:0; }
         #map { position:absolute; top:0; bottom:0; width:100%; }
-    </style>    
+    </style>
     <style>
         .sidebar { width:300px; }
         .legend { background-color:#f1f1f0; }
@@ -79,7 +79,7 @@
             <div class="pad1">
 
                 <ol id="building-list" class='txt-ol'>
-                </ol>  
+                </ol>
             </div>
         </center>
     </div>
@@ -183,7 +183,7 @@ var reloads = 0;
 var bounds = [
     [-157.822126, 21.292134], // Southwest coordinates
     [-157.812251, 21.306181]  // Northeast coordinates
-]; 
+];
 var map = new mapboxgl.Map({
     style: 'mapbox://styles/mapbox/light-v9',
     center: [-157.8199, 21.2987],
@@ -212,6 +212,7 @@ $('input[name="daterange"]').daterangepicker({}, function (start, end, label) {
         buildings[b].sumOfKWh = 0;
         map.removeLayer(b + reloads);
     }
+    reloads += 1;
 });
 
 var max = 0;
@@ -245,7 +246,6 @@ function updateData(url) {
         $($('.micro')[3]).text((4 * (100 / 6) * .01 * max.toFixed()).toFixed());
         $($('.micro')[4]).text((5 * (100 / 6) * .01 * max.toFixed()).toFixed());
         dataFinished();
-        reloads += 1;
     });
 }
 var url = 'https://t6snn1lxw3.execute-api.us-west-2.amazonaws.com/default/DataS3GET/2017-01-01T12:00:00/2017-01-02T11:59:59';
@@ -313,7 +313,7 @@ function dataFinished() {
                 return (buildings[b].sumOfKWh / buildings[b].num_of_buildings).toFixed();
             }
             function totalPower(b) {
-                return (buildings[b].sumOfKWh / buildings[b].num_of_buildings).toFixed();
+                return (buildings[b].sumOfKWh).toFixed();
             }
 
             new mapboxgl.Popup()

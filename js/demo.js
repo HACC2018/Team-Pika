@@ -42,37 +42,58 @@ $(function () {
 
     var all = "https://t6snn1lxw3.execute-api.us-west-2.amazonaws.com/default/DataS3GET/" + url;
     console.log(all);
+    var myChart;
+
     $.getJSON(all, function (result) {
       var labels = [],
-          data = [];
+        data = [];
       var sum = 0;
+      var totalSum = 0;
       console.log(result);
-      for (var i = 1; i < result.length; i++) {
+
+      for (var i = 0; i < result.length; i++) {
         //sum += Math.round(result[i][column_name[j]]]);
         // From hours -> weekly data points
         console.log(arr);
         for (var x = 0; x < arr.length; x++) {
+          console.log(result[i][arr[x]]);
           sum += Math.round(result[i][arr[x]]);
         }
+        totalSum += sum;
         // 24 hours
-        if (i % 1 == 0) {
-          data.push(sum);
-          labels.push(result[i].fulldatetime.split(" ")[0]);
-        }
+        data.push(sum);
+        labels.push(result[i].fulldatetime.split(" ")[0]);
         sum = 0;
       }
       console.log(data);
 
-      var myChart = new Chart(ctx, {
+      // Operation SC
+      $('#bigDashboardChart').remove();
+      $('#bigDashboardWrapper').append('<canvas id="bigDashboardChart"></canvas>');
+      ctx = $("#bigDashboardChart").get(0).getContext("2d");
+
+      averageData = []
+      maxData = []
+
+      averageKwh = Math.round(totalSum / (data.length + 1) * 100) / 100;
+      averageCO2 = Math.round(averageKwh * 0.35156 * 100) / 100;
+      maxKwh = Math.max(...data);
+
+      for (let i = 0; i < result.length; i++) {
+        averageData.push(averageKwh);
+        maxData.push(maxKwh);
+      }
+
+      myChart = new Chart(ctx, {
         type: 'line',
         data: {
           labels: labels,
           datasets: [{
             label: "Power Consumption",
-            borderColor: "#ff9900",
+            borderColor: "#ffffff",
             //  pointBorderColor: chartColor,
-            pointBackgroundColor: "#FF851B",
-            pointHoverBackgroundColor: "#FF851B",
+            pointBackgroundColor: "#ffffff",
+            pointHoverBackgroundColor: "#ffffff",
             //  pointHoverBorderColor: chartColor,
             pointBorderWidth: 0.5,
             pointHoverRadius: 7,
@@ -82,6 +103,36 @@ $(function () {
             backgroundColor: gradientFill,
             borderWidth: 2,
             data: data
+          }, {
+            label: "Average Power Consumption",
+            borderColor: "#0fdc63",
+            //  pointBorderColor: chartColor,
+            pointBackgroundColor: "#0fdc63",
+            pointHoverBackgroundColor: "#0fdc63",
+            //  pointHoverBorderColor: chartColor,
+            pointBorderWidth: 0.5,
+            pointHoverRadius: 7,
+            pointHoverBorderWidth: 2,
+            pointRadius: 1,
+            // fill: true,
+            // backgroundColor: gradientFill,
+            borderWidth: 2,
+            data: averageData,
+          }, {
+            label: "Max Power Consumption",
+            borderColor: "#ff9900",
+            //  pointBorderColor: chartColor,
+            pointBackgroundColor: "#ff9900",
+            pointHoverBackgroundColor: "#ff9900",
+            //  pointHoverBorderColor: chartColor,
+            pointBorderWidth: 0.5,
+            pointHoverRadius: 7,
+            pointHoverBorderWidth: 2,
+            pointRadius: 1,
+            // fill: true,
+            // backgroundColor: gradientFill,
+            borderWidth: 2,
+            data: maxData,
           }]
         },
         options: {
@@ -143,6 +194,45 @@ $(function () {
               }
             }]
           }
+        }
+      });
+
+      ctx = document.getElementById("canvas2").getContext("2d");
+      kWHGauge = new Chart(ctx, {
+        type: "tsgauge",
+        data: {
+          datasets: [{
+            backgroundColor: ["#41EADA", "#0fdc63", "#fd9704", "#ff7143"],
+            borderWidth: 0,
+            gaugeData: {
+              value: averageKwh,
+              valueColor: "#ff7143"
+            },
+            // Lowest, Avg, Max, Unreachable
+            gaugeLimits: [0, 28, 56, 148, 250]
+          }]
+        },
+        options: {
+          events: []
+        }
+      });
+
+      ctx = document.getElementById("canvas1").getContext("2d");
+      carbonGauge = new Chart(ctx, {
+        type: "tsgauge",
+        data: {
+          datasets: [{
+            backgroundColor: ["#41EADA", "#0fdc63", "#fd9704", "#ff7143"],
+            borderWidth: 0,
+            gaugeData: {
+              value: averageCO2,
+              valueColor: "#ff7143"
+            },
+            gaugeLimits: [0, 10, 20, 52, 88]
+          }]
+        },
+        options: {
+          events: []
         }
       });
     });
