@@ -312,10 +312,10 @@ function dataFinished() {
             lat = lat / coordinates.length;
 
             function avgHourPower(b) {
-                return (buildings[b].sumOfKWh / buildings[b].num_of_buildings).toFixed();
+                return ((buildings[b].sumOfKWh / buildings[b].num_of_buildings).toFixed() || 0);
             }
             function totalPower(b) {
-                return (buildings[b].sumOfKWh).toFixed();
+                return ((buildings[b].sumOfKWh).toFixed() || 0);
             }
 
             new mapboxgl.Popup()
